@@ -1,0 +1,96 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "firstName": "Jan",
+      "lastName": "Kowalski"
+    },
+    {
+      "id": 2
+    },
+    {
+      "id": 3
+    },
+    {
+      "id": 4
+    },
+    {
+      "task": "test",
+      "id": 5
+    },
+    {
+      "task": "test2",
+      "id": 6
+    },
+    {
+      "task": "newTask",
+      "isRunning": "",
+      "isDone": "",
+      "isRemoved": "",
+      "id": 7
+    },
+    {
+      "task": "test3",
+      "isRunning": "",
+      "isDone": "",
+      "isRemoved": "",
+      "id": 8
+    },
+    {
+      "task": "GET test",
+      "isRunning": "",
+      "isDone": "",
+      "isRemoved": "",
+      "id": 9
+    },
+    {
+      "task": "GET test 2",
+      "isRunning": "",
+      "isDone": "",
+      "isRemoved": "",
+      "id": 10
+    },
+    {
+      "task": "newTask",
+      "isRunning": "",
+      "isDone": "",
+      "isRemoved": "",
+      "id": 11
+    },
+    {
+      "task": "newTask 13:55",
+      "isRunning": "",
+      "isDone": "",
+      "isRemoved": "",
+      "id": 12
+    },
+    {
+      "task": "newTask 13:58",
+      "isRunning": "",
+      "isDone": "",
+      "isRemoved": "",
+      "id": 13
+    },
+    {
+      "task": "done?",
+      "isRunning": "",
+      "isDone": "",
+      "isRemoved": "",
+      "id": 14
+    },
+    {
+      "task": "done??",
+      "isRunning": "",
+      "isDone": "",
+      "isRemoved": "",
+      "id": 15
+    },
+    {
+      "task": "task 14:00",
+      "isRunning": "",
+      "isDone": "",
+      "isRemoved": "",
+      "id": 16
+    }
+  ]
+}
