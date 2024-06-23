@@ -1,3 +1,14 @@
+//do zrobienia:
+//1. funkcjonalności: 
+// rozpoczęcia odliczania
+// zatrzymania odliczania, jeśli zostało wcześniej rozpoczęte
+// zakończenia zadania, co spowoduje przeniesienie go na koniec listy (można wykorzystać .sort())
+// usunięcia z listy, co spowoduje, że zadanie nie zostanie wyrenderowane, ale będzie cały czas przechowywane w state (można wykorzystać .filter()).
+// Uznajemy, że w jednym momencie możemy wykonywać jedno zadanie.
+// Wciśnięcie przycisku zakończone powinno jednocześnie zatrzymywać naliczanie czasu.
+// Usunięcie zadania ma być możliwe dopiero po jego zakończeniu (uznajemy, że nie ma omyłkowo dodanych zadań).
+// Ostylowanie CSS
+
 import React from 'react';
 
 class TasksManager extends React.Component {
@@ -63,7 +74,16 @@ class TasksManager extends React.Component {
     renderTaskList = () => {
         return (
             this.state.tasks.map((task, index) => 
-                <li key={index}>{ task.task }</li>
+                (
+                    <section>
+                        <header key={index}>{ task.task }, {task.time}</header>
+                        <footer>
+                            <button>start/stop</button>
+                            <button>zakończone</button>
+                            <button disabled="true">usuń</button>
+                         </footer>
+                    </section>
+                )
             )
         )
     }

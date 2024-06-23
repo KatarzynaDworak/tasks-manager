@@ -1,16 +1,11 @@
 {
   "data": [
     {
-      "id": 1,
-      "firstName": "Jan",
-      "lastName": "Kowalski"
-    },
-    {
-      "task": "Bieg 5km o 11:00",
+      "task": "Bieg 5km",
       "isRunning": false,
       "isDone": false,
       "isRemoved": false,
-      "id": 2
+      "id": 1
     }
   ]
 }
