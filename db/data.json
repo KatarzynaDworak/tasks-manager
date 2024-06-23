@@ -6,6 +6,13 @@
       "isDone": false,
       "isRemoved": false,
       "id": 1
+    },
+    {
+      "task": "Wyniesienie drzwi przed dom",
+      "isRunning": false,
+      "isDone": false,
+      "isRemoved": false,
+      "id": 2
     }
   ]
 }
