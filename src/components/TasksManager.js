@@ -14,7 +14,12 @@ import React from 'react';
 class TasksManager extends React.Component {
     state = {
         tasks: [],
-        task: '' // aktualnie wprowadzone zadanie
+        task: '', // aktualnie wprowadzone zadanie
+    };
+
+    constructor(props) {
+        super(props);
+        this.intervalIds = {}; // Inicjalizujemy tablicę identyfikatorów liczników czasu
     }
 
     // Pobieramy istniejące zadania z serwera przy montowaniu komponentu
@@ -23,7 +28,11 @@ class TasksManager extends React.Component {
         .then(response => response.json())
         .then(data => {
             console.log('Task list', data);
-            this.setState({ tasks: data });
+            if (Array.isArray(data)) {
+                this.setState({ tasks: data });
+            } else {
+                console.error('Data fetched is not an array', data);
+            }
         })
         .catch(err => console.log(err));
     }
@@ -42,14 +51,15 @@ class TasksManager extends React.Component {
         const options = {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify({
                 task: newTask,
                 isRunning: false,
+                elapsedTime: 0,
                 isDone: false,
-                isRemoved: false
-            }) // Przesyłamy zadanie jako JSON
+                isRemoved: false,
+            }), // Przesyłamy zadanie jako JSON
         };
 
         this.submitHandler(options);
@@ -64,63 +74,89 @@ class TasksManager extends React.Component {
             // Dodajemy nowe zadanie do stanu
             this.setState(prevState => ({
                 tasks: [...prevState.tasks, newTask],
-                task: ''
+                task: '',
             }));
         })
         .catch(err => console.log(err));
     }
 
-    
     // renderujemy listę zadań
     renderTaskList = () => {
-        return (
-            this.state.tasks.map((task, index) => 
-                (
-                    <section key={index}>
-                        <header>{ task.task }, {task.time}</header>
-                        <footer>
-                            <button onClick={ (e) => this.handleStartAndStop(e)}>start/stop</button>
-                            <button>zakończone</button>
-                            <button disabled="true">usuń</button>
-                         </footer>
-                    </section>
-                )
-                )
-                )
-                }
-                
-                // utworzenie formularza ze wszystkimi polami
-                render() {
-                    return (
-                        <section>
-                <form onSubmit={ (e) => {
-                    e.preventDefault();
-                    this.handleTask(e.target[0].value);
-                    }}>
-                    <h1 onClick={ this.onClick }>TasksManager</h1>
-                    <input 
-                        name="task" 
-                        value={ this.state.task } 
-                        onChange={ (e) => this.handleChange(e.target.value) }>
-                    </input>
-                    <button type='submit'>Dodaj!</button>
-                    <ul>{ this.renderTaskList() }</ul>
-                </form>
-            </section>
-        )
-        }
-        
-        handleStartAndStop = (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            console.log('Button start/stop was clicked!')
+        if (!Array.isArray(this.state.tasks)) {
+            return null;
         }
 
-        onClick = () => {
-            const { tasks } = this.state;
-        console.log(tasks);
+        return this.state.tasks.map((task, index) => (
+            <section key={index}>
+                <header>{task.task}, {this.formatTime(task.elapsedTime)}</header>
+                <footer>
+                    <button onClick={(e) => this.handleStartAndStop(e, index)}>start/stop</button>
+                    <button>zakończone</button>
+                    <button disabled={true}>usuń</button>
+                </footer>
+            </section>
+        ));
     }
 
+    // utworzenie formularza ze wszystkimi polami
+    render() {
+        return (
+            <section>
+                <form onSubmit={(e) => {
+                    e.preventDefault();
+                    this.handleTask(e.target[0].value);
+                }}>
+                    <h1 onClick={this.onClick}>TasksManager</h1>
+                    <input
+                        name="task"
+                        value={this.state.task}
+                        onChange={(e) => this.handleChange(e.target.value)}>
+                    </input>
+                    <button type='submit'>Dodaj!</button>
+                    <ul>{this.renderTaskList()}</ul>
+                </form>
+            </section>
+        );
+    }
+
+    handleStartAndStop = (e, index) => {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log('Button start/stop was clicked!');
+
+        this.setState(prevState => {
+            const tasks = [...prevState.tasks];
+            const task = tasks[index];
+
+            if (task.isRunning) {
+                clearInterval(this.intervalIds[index]);
+                delete this.intervalIds[index];
+            } else {
+                this.intervalIds[index] = setInterval(() => {
+                    this.setState(prevState => {
+                        const tasks = [...prevState.tasks];
+                        tasks[index].elapsedTime += 1;
+                        return { tasks };
+                    });
+                }, 1000);
+            }
+
+            task.isRunning = !task.isRunning;
+            return { tasks };
+        });
+    }
+
+    formatTime = (timeInSeconds) => {
+        const hours = Math.floor(timeInSeconds / 3600).toString().padStart(2, '0');
+        const minutes = Math.floor((timeInSeconds % 3600) / 60).toString().padStart(2, '0');
+        const seconds = (timeInSeconds % 60).toString().padStart(2, '0');
+        return `${hours}:${minutes}:${seconds}`;
+    }
+
+    onClick = () => {
+        const { tasks } = this.state;
+        console.log(tasks);
+    }
 }
 
 export default TasksManager;
