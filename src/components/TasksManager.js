@@ -91,7 +91,7 @@ class TasksManager extends React.Component {
                 <header>{task.task}, {this.formatTime(task.elapsedTime)}</header>
                 <footer>
                     <button onClick={(e) => this.handleStartAndStop(e, index)}>start/stop</button>
-                    <button>zakończone</button>
+                    <button onClick={(e) => this.handleFinish(e)}>zakończone</button>
                     <button disabled={true}>usuń</button>
                 </footer>
             </section>
@@ -144,6 +144,12 @@ class TasksManager extends React.Component {
             task.isRunning = !task.isRunning;
             return { tasks };
         });
+    }
+
+    handleFinish = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log('Button "ZAKOŃCZ" was clicked!');
     }
 
     formatTime = (timeInSeconds) => {

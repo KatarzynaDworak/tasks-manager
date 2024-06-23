@@ -13,6 +13,14 @@
       "isDone": false,
       "isRemoved": false,
       "id": 2
+    },
+    {
+      "task": "",
+      "isRunning": false,
+      "elapsedTime": 0,
+      "isDone": false,
+      "isRemoved": false,
+      "id": 3
     }
   ]
 }
