@@ -15,7 +15,7 @@
       "id": 2
     },
     {
-      "task": "",
+      "task": "newTask",
       "isRunning": false,
       "elapsedTime": 0,
       "isDone": false,

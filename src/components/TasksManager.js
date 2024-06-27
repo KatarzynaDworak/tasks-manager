@@ -1,19 +1,26 @@
 //do zrobienia:
 //1. funkcjonalności: 
-// rozpoczęcia odliczania
-// zatrzymania odliczania, jeśli zostało wcześniej rozpoczęte
-// zakończenia zadania, co spowoduje przeniesienie go na koniec listy (można wykorzystać .sort())
-// usunięcia z listy, co spowoduje, że zadanie nie zostanie wyrenderowane, ale będzie cały czas przechowywane w state (można wykorzystać .filter()).
-// Uznajemy, że w jednym momencie możemy wykonywać jedno zadanie.
-// Wciśnięcie przycisku zakończone powinno jednocześnie zatrzymywać naliczanie czasu.
-// Usunięcie zadania ma być możliwe dopiero po jego zakończeniu (uznajemy, że nie ma omyłkowo dodanych zadań).
-// Ostylowanie CSS
+// DO NAPRAWY - rozpoczęcia odliczania + zatrzymania odliczania, jeśli zostało wcześniej rozpoczęte
+// DO ZROBIENIA - zakończenia zadania, co spowoduje przeniesienie go na koniec listy (można wykorzystać .sort())
+// DO ZROBIENIA - usunięcia z listy, co spowoduje, że zadanie nie zostanie wyrenderowane, ale będzie cały czas przechowywane w state (można wykorzystać .filter()).
+// DO ZROBIENIA - Uznajemy, że w jednym momencie możemy wykonywać jedno zadanie.
+// DO ZROBIENIA - Wciśnięcie przycisku zakończone powinno jednocześnie zatrzymywać naliczanie czasu.
+// DO ZROBIENIA - Usunięcie zadania ma być możliwe dopiero po jego zakończeniu (uznajemy, że nie ma omyłkowo dodanych zadań).
+// DO ZROBIENIA - Ostylowanie CSS
 
 import React from 'react';
 
 class TasksManager extends React.Component {
     state = {
-        tasks: [],
+        tasks: [
+            {
+                text: [],
+                time: 0,
+                isRunning: false,
+                isDone: false,
+                isRemoved: false
+            }
+        ],
         task: '', // aktualnie wprowadzone zadanie
     };
 
@@ -29,7 +36,7 @@ class TasksManager extends React.Component {
         .then(data => {
             console.log('Task list', data);
             if (Array.isArray(data)) {
-                this.setState({ tasks: data });
+                this.setState({ tasks: [...state.tasks, data] });
             } else {
                 console.error('Data fetched is not an array', data);
             }
