@@ -41,6 +41,19 @@ export class ToDo extends React.Component {
         }))
     }
     
+    deleteTask = (id) => {
+        this.setState((prevState) => ({
+            tasks: prevState.tasks.filter((task) => task.id !== id)
+        }))
+    }
+
+    makeDeleteTaskHandler = (id) => (e) => {
+        // e.preventDefault();
+        // e.stopPropagation();
+
+        this.deleteTask(id);
+    }
+
     toggleNewTask = (id) => {
         this.setState((prevState) => ({
             tasks: prevState.tasks.map((task) => {
@@ -70,13 +83,19 @@ export class ToDo extends React.Component {
                         onChange={this.onNewTaskValueChange}
                     >
                     </input>
+                    <button>SUBMIT</button>
                     <br></br>
+                
                     <ul>
                         { tasks.map(({id, text, isCompleted}) => (
-                                <li key={id}>
+                                <li 
+                                key={id}
+                                onClick={this.makeToggleTaskHandler(id)}
+                                >
                                     {text} {isCompleted ? '[COMPLETED]' : ''}
-                                    <button onClick={this.makeToggleTaskHandler(id)}>TOGGLE</button>
+                                <button onClick={this.makeDeleteTaskHandler(id)}>DELETE</button>
                                 </li>
+
                         ))}
                     </ul>
                 </form>
