@@ -48,9 +48,6 @@ export class ToDo extends React.Component {
     }
 
     makeDeleteTaskHandler = (id) => (e) => {
-        // e.preventDefault();
-        // e.stopPropagation();
-
         this.deleteTask(id);
     }
 
