@@ -17,7 +17,7 @@ export class ToDo extends React.Component {
     ]
     }
 
-    onNewTasValueChange = (e) => {
+    onNewTaskValueChange = (e) => {
         this.setState((prevState) => ({
             ...prevState,
             newTaskValue: e.target.value
@@ -41,6 +41,21 @@ export class ToDo extends React.Component {
         }))
     }
     
+    toggleNewTask = (id) => {
+        this.setState((prevState) => ({
+            tasks: prevState.tasks.map((task) => {
+                if(task.id !== id) return task
+                return {
+                    ...task,
+                    isCompleted: !task.isCompleted
+                }
+            })
+        }))
+    }
+
+    makeToggleTaskHandler = (id) => (e) => {
+        this.toggleNewTask(id)
+    }
 
     render() {
         const { tasks, newTaskValue } = this.state;
@@ -52,16 +67,17 @@ export class ToDo extends React.Component {
                     <input 
                         name="text"
                         value={newTaskValue}
-                        onChange={this.onNewTasValueChange}
+                        onChange={this.onNewTaskValueChange}
                     >
                     </input>
                     <br></br>
-                    <button>SUBMIT</button>
                     <ul>
-                        { tasks.map(({id, text}) => {
-                            return <li key={id}>{text}</li>
-                        })
-                        }
+                        { tasks.map(({id, text, isCompleted}) => (
+                                <li key={id}>
+                                    {text} {isCompleted ? '[COMPLETED]' : ''}
+                                    <button onClick={this.makeToggleTaskHandler(id)}>TOGGLE</button>
+                                </li>
+                        ))}
                     </ul>
                 </form>
             </div>
