@@ -12,15 +12,7 @@ import React from 'react';
 
 class TasksManager extends React.Component {
     state = {
-        tasks: [
-            {
-                text: [],
-                time: 0,
-                isRunning: false,
-                isDone: false,
-                isRemoved: false
-            }
-        ],
+        tasks: [],
         task: '', // aktualnie wprowadzone zadanie
     };
 
@@ -36,7 +28,7 @@ class TasksManager extends React.Component {
         .then(data => {
             console.log('Task list', data);
             if (Array.isArray(data)) {
-                this.setState({ tasks: [...state.tasks, data] });
+                this.setState({ tasks: data });
             } else {
                 console.error('Data fetched is not an array', data);
             }
@@ -89,10 +81,6 @@ class TasksManager extends React.Component {
 
     // renderujemy listę zadań
     renderTaskList = () => {
-        if (!Array.isArray(this.state.tasks)) {
-            return null;
-        }
-
         return this.state.tasks.map((task, index) => (
             <section key={index}>
                 <header>{task.task}, {this.formatTime(task.elapsedTime)}</header>
