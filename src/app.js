@@ -1,8 +1,7 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 
-import TasksManager from './components/TasksManager';
-import ContainerJS from './components/ContainerJs';
+import TaskManager from './components/TaskManager';
 
 import './styles/main.css';
 import ToDo from './components/ToDo';
@@ -12,9 +11,7 @@ const App = () => {
     
     return (
         <>
-            <TasksManager />
-            <ContainerJS />
-            <ToDo />
+            <TaskManager />
         </>
     );
 };
