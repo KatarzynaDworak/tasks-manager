@@ -36,39 +36,38 @@ export class TasksManager extends React.Component {
 
     addNewTask = (e) => {
         e.preventDefault();
-
+    
         if (this.state.newTask.trim() === '') return;
-
+    
         const newTask = {
             text: this.state.newTask,
             time: 0,
             isRunning: false,
             isDone: false,
             isRemoved: false
-        }
-
-        // Add the new task to the state
-        this.setState((prevState) => ({
-            tasks: [...prevState.tasks, this.state.newTask],
-            newTask: ''
-        }))
-        
+        };
+    
         // Send the new task to the server
         const options = {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify(newTask)
-            }
-        }
-
+        };
+    
         fetch('http://localhost:3005/data', options)
-        .then(response => response.json())
-        .then(data => {
-            console.log('New task added to server', data);
-        })
-        .catch(err => console.log(err));  
-    }       
+            .then(response => response.json())
+            .then(data => {
+                console.log('New task added to server', data);
+                // Add the new task to the state
+                this.setState((prevState) => ({
+                    tasks: [...prevState.tasks, data], // use data returned from server
+                    newTask: '' // reset the newTask field
+                }));
+            })
+            .catch(err => console.log(err));
+    }    
 
     render() {
         return (

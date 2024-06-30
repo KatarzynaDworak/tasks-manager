@@ -1,29 +1,28 @@
 {
   "data": [
     {
-      "task": "Bieg 5km",
+      "text": "Pojechać do bankomatu",
+      "time": 0,
       "isRunning": false,
       "isDone": false,
       "isRemoved": false,
       "id": 1
     },
     {
-      "task": "Wyniesienie drzwi przed dom",
+      "text": "Przelać pieniądze za szpatułki",
+      "time": 0,
       "isRunning": false,
       "isDone": false,
       "isRemoved": false,
       "id": 2
     },
     {
-      "task": "GET test 2",
+      "text": "Popracować nad githubem",
+      "time": 0,
       "isRunning": false,
-      "elapsedTime": 0,
       "isDone": false,
       "isRemoved": false,
       "id": 3
-    },
-    {
-      "id": 4
     }
   ]
 }
