@@ -1,17 +1,19 @@
+//1. dodanie serwera
+//2. dodanie struktury pliku + funkcjonalności
+//3. ostylowanie zadania
+
 import React from "react";
 
 export class TasksManager extends React.Component {
     state = {
-        tasks: [],
-        newTask: ''
+        newTask: '',
+        tasks: []
     }
 
-    renderTaskList() {
-        return (
-            this.state.tasks.map((task, id) => {
+    renderTaskList = () => {
+        return this.state.tasks.map((task, id) => (
                 <li key={id}>{ task }</li>
-            })
-        )
+            ))
     }
 
     handleChange = (e) => {
@@ -21,7 +23,13 @@ export class TasksManager extends React.Component {
 
     addNewTask = (e) => {
         e.preventDefault();
-        this.renderTaskList()
+
+        if (this.state.newTask.trim() === '') return;
+        this.setState((prevState) => ({
+            tasks: [...prevState.tasks, this.state.newTask],
+            newTask: ''
+        }))
+        
     }
 
     render() {
@@ -36,7 +44,7 @@ export class TasksManager extends React.Component {
                     </input>
                     <button>SUBMIT</button>
                     <ul>
-                        {this.renderTaskList}
+                        {this.renderTaskList()}
                     </ul>
                 </form>
             </section>
